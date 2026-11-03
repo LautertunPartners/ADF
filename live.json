@@ -1,1 +1,7 @@
-[]
+[
+ {"id": "T1", "league": "NFL", "game_date": "2026-11-02", "away": "Bears", "home": "Seahawks", "bet_type": "Spread", "side": "Seahawks", "line": "-3"},
+ {"id": "T2", "league": "NFL", "game_date": "2026-11-02", "away": "Bears", "home": "Seahawks", "bet_type": "Spread", "side": "Bears", "line": "+6.5"},
+ {"id": "T3", "league": "NFL", "game_date": "2026-11-02", "away": "Bears", "home": "Seahawks", "bet_type": "Over", "side": "", "line": "44.5"},
+ {"id": "T4", "league": "NFL", "game_date": "2026-11-02", "away": "Bears", "home": "Seahawks", "bet_type": "Under", "side": "", "line": "40.5"},
+ {"id": "T5", "league": "NFL", "game_date": "2026-11-02", "away": "Bears", "home": "Seahawks", "bet_type": "Spread", "side": "Bears", "line": "-1.5"}
+]
