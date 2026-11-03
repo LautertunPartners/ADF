@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Anti-Dantzler Fund</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&family=Newsreader:opsz,wght@6..72,400&display=swap">
+<style>
+/* Layout: one centered column, tabs over a report of tiles, letters and pick cards. */
+:root {
+  --color-bg: #f6f7f4; --color-panel: #ffffff; --color-fg: #1c2420; --color-fg-muted: #5d6a63; --color-border-line: #dde3de;
+  --color-ok: #23864f; --color-bad: #c23b32; --series-1: #2f6f8f; --series-2: #b8762a;
+  --cds-chart-axis: #9aa59f; --cds-chart-grid: #e6ebe7; --cds-chart-status-critical: #c23b32;
+  --cds-surface-popover: #ffffff; --cds-border: #dde3de; --cds-text-secondary: #5d6a63; --cds-shadow-popover: 0 4px 16px rgba(20, 30, 25, .12);
+  --font-anthropic-sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-anthropic-serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --cds-font-size-caption: .8125rem; --cds-font-size-body: .9375rem; --cds-font-size-heading: 1.25rem; --cds-font-size-title: 2rem; --cds-font-weight-medium: 600;
+  --cds-gap-xs: 4px; --cds-gap-sm: 8px; --cds-gap-md: 12px; --cds-gap-lg: 20px; --cds-gap-xl: 28px;
+  --cds-pad-xs: 4px; --cds-pad-sm: 8px; --cds-pad-md: 12px; --cds-pad-lg: 18px; --cds-radius: 8px;
+}
+@media (prefers-color-scheme: dark) { :root { --color-bg: #121614; --color-panel: #1a201d; --color-fg: #e8ece9; --color-fg-muted: #9aa69f; --color-border-line: #2c3430;
+  --color-ok: #3fae6e; --color-bad: #e2675e; --series-1: #6fb0d0; --series-2: #e0a456; --cds-chart-axis: #6c7771; --cds-chart-grid: #262d29; --cds-chart-status-critical: #e2675e;
+  --cds-surface-popover: #1f2622; --cds-border: #2c3430; --cds-text-secondary: #9aa69f; --cds-shadow-popover: 0 4px 16px rgba(0, 0, 0, .5); color-scheme: dark; } }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-family: var(--font-anthropic-sans); font-size: var(--cds-font-size-body); }
+.wrap { max-width: 960px; margin: 0 auto; padding-block: 24px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+[hidden] { display: none !important; }
+.fb-lv-bar { top: env(safe-area-inset-top, 0px); }
+
+.fb { display: grid; gap: var(--cds-gap-xl); font-family: var(--font-anthropic-sans); }
+.fb-head { display: grid; gap: var(--cds-gap-xs); }
+.fb-eyebrow { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); letter-spacing: .08em; text-transform: uppercase; }
+.fb-head h1 { margin: 0; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); text-wrap: balance; }
+.fb-head p { margin: 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-body); max-width: 65ch; }
+.fb .fb-head b, .fb .fb-letter b { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+.fb-tabs { display: flex; gap: var(--cds-gap-xs); border-bottom: 1px solid var(--color-border-line); }
+.fb-tabs button { font: inherit; font-size: var(--cds-font-size-body); background: none; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; padding: var(--cds-pad-sm) var(--cds-pad-md); color: var(--color-fg-muted); cursor: pointer; }
+.fb-tabs button[aria-selected="true"] { color: var(--color-fg); border-bottom-color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+.fb-page { display: grid; gap: var(--cds-gap-xl); }
+.fb-tiles { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); }
+.fb-tile { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md) var(--cds-pad-lg); display: grid; gap: var(--cds-gap-xs); align-content: start; }
+.fb-label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); letter-spacing: .04em; text-transform: uppercase; }
+.fb-big { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; line-height: 1.1; }
+.fb .fb-big b { font-weight: 400; }
+.fb-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.fb .pos { color: var(--color-ok); }
+.fb .neg { color: var(--color-bad); }
+.fb-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: grid; gap: var(--cds-gap-sm); align-content: start; min-width: 0; }
+.fb-card h2, .fb-sec h2 { margin: 0; font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); }
+.fb-card > p { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.fb-sec { display: grid; gap: var(--cds-gap-md); }
+.fb-week { display: grid; gap: var(--cds-gap-md); background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); min-width: 0; }
+.fb-week-head { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: baseline; justify-content: space-between; }
+.fb-week-head h3 { margin: 0; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-heading); }
+.fb-chip { font-size: var(--cds-font-size-caption); border: 1px solid var(--color-border-line); border-radius: 999px; padding: 2px var(--cds-pad-sm); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fb-letter { display: grid; gap: var(--cds-gap-sm); max-width: 68ch; font-family: var(--font-anthropic-serif); font-size: var(--cds-font-size-body); line-height: 1.6; }
+.fb-letter p { margin: 0; }
+.fb-letter .fb-sign { font-style: italic; color: var(--color-fg-muted); }
+.fb-chart { position: relative; min-height: 240px; }
+.fb-chart svg { display: block; overflow: visible; }
+.fb-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); white-space: nowrap; z-index: 2; }
+.fb-tip .k { color: var(--cds-text-secondary); }
+.fb-scroll { overflow-x: auto; }
+.fb table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+.fb th { text-align: left; font-weight: var(--cds-font-weight-medium); color: var(--color-fg-muted); padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+.fb td { padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); vertical-align: top; }
+.fb-pill { display: inline-block; min-width: 1.6em; text-align: center; border-radius: var(--cds-radius); padding: 0 .35em; font-weight: var(--cds-font-weight-medium); }
+.fb-pill.w { color: var(--color-ok); border: 1px solid var(--color-ok); }
+.fb-pill.l { color: var(--color-bad); border: 1px solid var(--color-bad); }
+.fb-tag { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.fb button:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; }
+.fb-lv { display: grid; gap: var(--cds-gap-lg); }
+.fb-lv-bar { position: sticky; top: 0; z-index: 3; background: var(--color-bg); border-bottom: 1px solid var(--color-border-line); padding-block: var(--cds-pad-sm); display: grid; gap: var(--cds-gap-sm); }
+.fb-lv-top { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; justify-content: space-between; }
+.fb-seg { display: inline-flex; border: 1px solid var(--color-border-line); border-radius: 999px; padding: 2px; background: var(--color-panel); }
+.fb-seg button { font: inherit; font-size: var(--cds-font-size-caption); font-weight: var(--cds-font-weight-medium); border: 0; border-radius: 999px; background: none; color: var(--color-fg-muted); padding: 4px 12px; cursor: pointer; }
+.fb-seg button[aria-pressed="true"] { background: var(--color-fg); color: var(--color-bg); }
+.fb-fresh { display: flex; gap: var(--cds-gap-xs); align-items: center; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.fb-fresh button { font: inherit; font-size: var(--cds-font-size-caption); background: none; border: 1px solid var(--color-border-line); border-radius: 999px; color: var(--color-fg); padding: 2px 10px; cursor: pointer; }
+.fb-sum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--cds-gap-xs); }
+.fb-sum > div { display: grid; gap: 2px; min-width: 0; }
+.fb-sum .fb-big { font-size: var(--cds-font-size-heading); }
+.fb-lg { display: grid; gap: var(--cds-gap-sm); }
+.fb-lg h3 { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); letter-spacing: .06em; text-transform: uppercase; font-weight: var(--cds-font-weight-medium); }
+.fb-cards { display: grid; gap: var(--cds-gap-xs); }
+.fb-g { --tint: var(--color-panel); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px var(--cds-gap-sm); align-items: center; padding: var(--cds-pad-sm) var(--cds-pad-md); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); background: var(--tint); }
+.fb-g .pk { font-weight: var(--cds-font-weight-medium); font-size: var(--cds-font-size-body); min-width: 0; overflow-wrap: anywhere; }
+.fb-g .sc { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; min-width: 0; overflow-wrap: anywhere; }
+.fb-g .pc { grid-row: 1 / span 2; grid-column: 2; text-align: right; display: grid; justify-items: end; }
+.fb-g .pc b { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-heading); font-variant-numeric: tabular-nums; line-height: 1.1; }
+.fb-g .pc span { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.fb-g.up { border-color: color-mix(in srgb, var(--color-ok) 45%, var(--color-border-line)); }
+.fb-g.down { border-color: color-mix(in srgb, var(--color-bad) 45%, var(--color-border-line)); }
+.fb-g.won, .fb-g.lost { border-color: transparent; color: #fff; }
+.fb-g.won { background: color-mix(in srgb, var(--color-ok) 78%, #000); }
+.fb-g.lost { background: color-mix(in srgb, var(--color-bad) 78%, #000); }
+.fb-g.won .sc, .fb-g.lost .sc, .fb-g.won .pc span, .fb-g.lost .pc span { color: rgba(255, 255, 255, .82); }
+@media (max-width: 640px) { .fb .fb-opt { display: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="fb">
+  <header class="fb-head">
+    <span class="fb-eyebrow">ADF · Fund report</span>
+    <h1>The Anti-Dantzler Fund</h1>
+    <p>The ADF takes the other side of every bet John Dantzler makes, at 1 unit a bet and even money. Season to date the Fund is <b><span data-draw="val" data-source="summary" data-field="fund_wins">—</span>-<span data-draw="val" data-source="summary" data-field="fund_losses">—</span></b> for <b><span data-draw="val" data-source="summary" data-field="fund_units" data-fmt="signed">—</span></b> units, which means Dantzler is <b><span data-draw="val" data-source="summary" data-field="john_wins">—</span>-<span data-draw="val" data-source="summary" data-field="john_losses">—</span></b>. Graded through <span data-draw="val" data-source="summary" data-field="through" data-fmt="date">—</span>.</p>
+  </header>
+
+  <div class="fb-tabs" role="tablist" aria-label="Report sections">
+    <button type="button" role="tab" id="tab-history" data-tab="history" aria-selected="true" aria-controls="history">Historicals</button>
+    <button type="button" role="tab" id="tab-live" data-tab="live" aria-selected="false" aria-controls="live">Live picks</button>
+  </div>
+
+  <section class="fb-page" id="history" role="tabpanel" aria-labelledby="tab-history">
+    <div class="fb-tiles">
+      <div class="fb-tile">
+        <span class="fb-label">Fund record</span>
+        <span class="fb-big"><b><span data-draw="val" data-source="summary" data-field="fund_wins">—</span></b>-<b><span data-draw="val" data-source="summary" data-field="fund_losses">—</span></b></span>
+        <span class="fb-note"><span data-draw="val" data-source="summary" data-field="fund_pct" data-fmt="pct">—</span> hit rate</span>
+      </div>
+      <div class="fb-tile">
+        <span class="fb-label">Fund units</span>
+        <span class="fb-big"><span data-draw="val" data-source="summary" data-field="fund_units" data-fmt="signed">—</span></span>
+        <span class="fb-note">1 unit a bet, even money</span>
+      </div>
+      <div class="fb-tile">
+        <span class="fb-label">Dantzler's record</span>
+        <span class="fb-big"><b><span data-draw="val" data-source="summary" data-field="john_wins">—</span></b>-<b><span data-draw="val" data-source="summary" data-field="john_losses">—</span></b></span>
+        <span class="fb-note">The man we fade</span>
+      </div>
+    </div>
+
+    <section class="fb-card" id="nav">
+      <h2>Fund units by weekend</h2>
+      <p>Bars are each weekend's net units for the Fund. The line is the running total.</p>
+      <div class="fb-chart" data-draw="weekly" data-source="by_weekend"></div>
+    </section>
+
+    <section class="fb-sec" id="letters">
+      <h2>Shareholder letters</h2>
+
+      <article class="fb-week" id="wk-2026-11-01"><div class="fb-week-head"><h3>Weekend of <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-01" data-field="weekend" data-fmt="date">—</span></h3><span class="fb-chip">Fund <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-01" data-field="fund_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-01" data-field="fund_losses">—</span> · <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-01" data-field="fund_units" data-fmt="signed">—</span> units</span></div>
+      <div class="fb-letter">
+        <p>Dear Limited Partners,</p>
+        <p>After a week off, during which the Fund posted its best results of the year by not betting, we returned to the market. There is no gentle way to put what happened next. The Fund went <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-01" data-field="fund_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-01" data-field="fund_losses">—</span></b> for <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-01" data-field="fund_units" data-fmt="signed">—</span></b> units, and Dantzler hit nearly everything he touched.</p>
+        <p>Washington won outright at Nebraska (<span data-draw="val" data-source="ledger" data-where="id=B42" data-field="final_score">—</span>). North Carolina lost by a field goal as a two-touchdown dog (<span data-draw="val" data-source="ledger" data-where="id=B41" data-field="final_score">—</span>). Dantzler's <span data-draw="val" data-source="ledger" data-where="id=B48" data-field="pick">—</span> came in by half a point (<span data-draw="val" data-source="ledger" data-where="id=B48" data-field="final_score">—</span>). We have reviewed the tape. Every coin landed on its edge, and every edge was his.</p>
+        <p>Our two wins deserve mention. He took <span data-draw="val" data-source="ledger" data-where="id=B45" data-field="pick">—</span> and the Rams won going away (<span data-draw="val" data-source="ledger" data-where="id=B45" data-field="final_score">—</span>). He also took <span data-draw="val" data-source="ledger" data-where="id=B43" data-field="pick">—</span>, and Wisconsin did not score (<span data-draw="val" data-source="ledger" data-where="id=B43" data-field="final_score">—</span>).</p>
+        <p>The Fund now stands at <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-01" data-field="cum_fund_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-01" data-field="cum_fund_losses">—</span></b> on the season, <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-01" data-field="cum_fund_units" data-fmt="signed">—</span></b> units. Redemption requests may be submitted to the Committee in writing, where they will be ignored. We remain confident. He cannot keep this up.</p>
+        <p class="fb-sign">The ADF Investment Committee</p>
+      </div>
+      <div class="fb-scroll"><table data-source="ledger" data-row-key="id"><thead><tr><th data-field="league" class="fb-opt">League</th><th data-field="pick">Dantzler took</th><th data-field="fade">ADF took</th><th data-field="final_score" class="fb-opt">Final</th><th data-field="fund_result">ADF</th></tr></thead><tbody data-draw="week" data-week="2026-11-01"></tbody></table></div>
+      </article>
+
+      <article class="fb-week" id="wk-2026-10-18"><div class="fb-week-head"><h3>Weekend of <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-18" data-field="weekend" data-fmt="date">—</span></h3><span class="fb-chip">Fund <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-18" data-field="fund_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-18" data-field="fund_losses">—</span> · <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-18" data-field="fund_units" data-fmt="signed">—</span> units</span></div>
+      <div class="fb-letter">
+        <p>Dear Limited Partners,</p>
+        <p>Dantzler showed real conviction this week, which is exactly the kind of thinking this Fund exists to exploit. He took <span data-draw="val" data-source="ledger" data-where="id=B32" data-field="pick">—</span>, and Buffalo won by a field goal (<span data-draw="val" data-source="ledger" data-where="id=B32" data-field="final_score">—</span>). We sent him a fruit basket.</p>
+        <p>Then <span data-draw="val" data-source="ledger" data-where="id=B35" data-field="pick">—</span>, won comfortably (<span data-draw="val" data-source="ledger" data-where="id=B35" data-field="final_score">—</span>), and his Saturday add of <span data-draw="val" data-source="ledger" data-where="id=B28" data-field="pick">—</span> squeaked home (<span data-draw="val" data-source="ledger" data-where="id=B28" data-field="final_score">—</span>). The Chiefs/Chargers and Ravens/Browns unders never broke a sweat. The Fund went <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-18" data-field="fund_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-18" data-field="fund_losses">—</span></b> for the week, <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-18" data-field="fund_units" data-fmt="signed">—</span></b> units, and sits at <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-18" data-field="cum_fund_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-18" data-field="cum_fund_losses">—</span></b> on the year.</p>
+        <p>Management also notes that Dantzler refuses to bet against the Giants under any circumstances. We consider this our most durable edge.</p>
+        <p class="fb-sign">The ADF Investment Committee</p>
+      </div>
+      <div class="fb-scroll"><table data-source="ledger" data-row-key="id"><thead><tr><th data-field="league" class="fb-opt">League</th><th data-field="pick">Dantzler took</th><th data-field="fade">ADF took</th><th data-field="final_score" class="fb-opt">Final</th><th data-field="fund_result">ADF</th></tr></thead><tbody data-draw="week" data-week="2026-10-18"></tbody></table></div>
+      </article>
+
+      <article class="fb-week" id="wk-2026-10-11"><div class="fb-week-head"><h3>Weekend of <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-11" data-field="weekend" data-fmt="date">—</span></h3><span class="fb-chip">Fund <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-11" data-field="fund_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-11" data-field="fund_losses">—</span> · <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-11" data-field="fund_units" data-fmt="signed">—</span> units</span></div>
+      <div class="fb-letter">
+        <p>Dear Limited Partners,</p>
+        <p>We owe you candor. Dantzler took <span data-draw="val" data-source="ledger" data-where="id=B19" data-field="pick">—</span> knowing it was a sucker bet. The game ended in a tie (<span data-draw="val" data-source="ledger" data-where="id=B19" data-field="final_score">—</span>). The Giants did not win. Dantzler did. Our lawyers reviewed whether a tie should count and regret to inform us that it does.</p>
+        <p>The Browns/Jets and Vikings/Saints unders also went his way, and so did the Steelers. Consolation came from the West Coast: <span data-draw="val" data-source="ledger" data-where="id=B21" data-field="pick">—</span> lost by a field goal (<span data-draw="val" data-source="ledger" data-where="id=B21" data-field="final_score">—</span>), and the Rams dropped a Monday night shootout (<span data-draw="val" data-source="ledger" data-where="id=B24" data-field="final_score">—</span>).</p>
+        <p>The Fund went <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-11" data-field="fund_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-11" data-field="fund_losses">—</span></b> for the week, <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-11" data-field="fund_units" data-fmt="signed">—</span></b> units. Season to date: <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-11" data-field="cum_fund_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-11" data-field="cum_fund_losses">—</span></b>, <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-11" data-field="cum_fund_units" data-fmt="signed">—</span></b> units.</p>
+        <p class="fb-sign">The ADF Investment Committee</p>
+      </div>
+      <div class="fb-scroll"><table data-source="ledger" data-row-key="id"><thead><tr><th data-field="league" class="fb-opt">League</th><th data-field="pick">Dantzler took</th><th data-field="fade">ADF took</th><th data-field="final_score" class="fb-opt">Final</th><th data-field="fund_result">ADF</th></tr></thead><tbody data-draw="week" data-week="2026-10-11"></tbody></table></div>
+      </article>
+
+      <article class="fb-week" id="wk-2026-10-04"><div class="fb-week-head"><h3>Weekend of <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-04" data-field="weekend" data-fmt="date">—</span></h3><span class="fb-chip">Fund <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-04" data-field="fund_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-04" data-field="fund_losses">—</span> · <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-04" data-field="fund_units" data-fmt="signed">—</span> units</span></div>
+      <div class="fb-letter">
+        <p>Dear Limited Partners,</p>
+        <p>A flat week at <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-04" data-field="fund_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-04" data-field="fund_losses">—</span></b> and <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-04" data-field="fund_units" data-fmt="signed">—</span></b> units, which in this business we call capital preservation. Dantzler's card this week behaved like a coin with opinions.</p>
+        <p>Two items for the record. The Texans lost again (<span data-draw="val" data-source="ledger" data-where="id=B15" data-field="final_score">—</span>), so Dantzler has yet to win a bet laying points with Houston. The Committee has adopted a standing policy of fading any Texans favorite he touches. He also took <span data-draw="val" data-source="ledger" data-where="id=B09" data-field="pick">—</span>, and Clemson lost by four touchdowns (<span data-draw="val" data-source="ledger" data-where="id=B09" data-field="final_score">—</span>).</p>
+        <p>Against that, Atlanta won by three touchdowns (<span data-draw="val" data-source="ledger" data-where="id=B16" data-field="final_score">—</span>), and Washington and NC State both covered for him. Season to date: <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-04" data-field="cum_fund_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-04" data-field="cum_fund_losses">—</span></b>, <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-10-04" data-field="cum_fund_units" data-fmt="signed">—</span></b> units.</p>
+        <p class="fb-sign">The ADF Investment Committee</p>
+      </div>
+      <div class="fb-scroll"><table data-source="ledger" data-row-key="id"><thead><tr><th data-field="league" class="fb-opt">League</th><th data-field="pick">Dantzler took</th><th data-field="fade">ADF took</th><th data-field="final_score" class="fb-opt">Final</th><th data-field="fund_result">ADF</th></tr></thead><tbody data-draw="week" data-week="2026-10-04"></tbody></table></div>
+      </article>
+
+      <article class="fb-week" id="wk-2026-09-27"><div class="fb-week-head"><h3>Weekend of <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-09-27" data-field="weekend" data-fmt="date">—</span></h3><span class="fb-chip">Fund <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-09-27" data-field="fund_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-09-27" data-field="fund_losses">—</span> · <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-09-27" data-field="fund_units" data-fmt="signed">—</span> units</span></div>
+      <div class="fb-letter">
+        <p>Dear Limited Partners,</p>
+        <p>A quiet week. Dantzler made exactly one bet, <span data-draw="val" data-source="ledger" data-where="id=B06" data-field="pick">—</span> in Denver, and the Committee faded it with real gratitude. Final: <span data-draw="val" data-source="ledger" data-where="id=B06" data-field="final_score">—</span>.</p>
+        <p>The Fund is now <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-09-27" data-field="cum_fund_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-09-27" data-field="cum_fund_losses">—</span></b> on the season, <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-09-27" data-field="cum_fund_units" data-fmt="signed">—</span></b> units, and Dantzler is <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-09-27" data-field="cum_john_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-09-27" data-field="cum_john_losses">—</span></b>. We are starting to worry he will stop betting. LPs are asked not to bring up the record around him.</p>
+        <p class="fb-sign">The ADF Investment Committee</p>
+      </div>
+      <div class="fb-scroll"><table data-source="ledger" data-row-key="id"><thead><tr><th data-field="league" class="fb-opt">League</th><th data-field="pick">Dantzler took</th><th data-field="fade">ADF took</th><th data-field="final_score" class="fb-opt">Final</th><th data-field="fund_result">ADF</th></tr></thead><tbody data-draw="week" data-week="2026-09-27"></tbody></table></div>
+      </article>
+
+      <article class="fb-week" id="wk-2026-09-20"><div class="fb-week-head"><h3>Weekend of <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-09-20" data-field="weekend" data-fmt="date">—</span></h3><span class="fb-chip">Fund <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-09-20" data-field="fund_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-09-20" data-field="fund_losses">—</span> · <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-09-20" data-field="fund_units" data-fmt="signed">—</span> units</span></div>
+      <div class="fb-letter">
+        <p>Dear Limited Partners,</p>
+        <p>Welcome to the Anti-Dantzler Fund. The strategy is simple: whatever Dantzler likes, we take the other side. In our first weekend it worked about as well as we could have hoped. The Fund went <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-09-20" data-field="fund_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-09-20" data-field="fund_losses">—</span></b> for <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-09-20" data-field="fund_units" data-fmt="signed">—</span></b> units.</p>
+        <p>Dantzler laid points with Houston, Tampa Bay and Kansas City. The Texans barely showed up (<span data-draw="val" data-source="ledger" data-where="id=B04" data-field="final_score">—</span>). The Bucs needed to beat Cleveland by more than a touchdown and lost to Cleveland (<span data-draw="val" data-source="ledger" data-where="id=B01" data-field="final_score">—</span>). The Chiefs did win, by a field goal (<span data-draw="val" data-source="ledger" data-where="id=B02" data-field="final_score">—</span>), which Dantzler has described to us as basically a cover.</p>
+        <p>Our lone loss was the Vikings (<span data-draw="val" data-source="ledger" data-where="id=B05" data-field="final_score">—</span>), a game that set offense back a decade. Nobody should have watched it, and we didn't.</p>
+        <p class="fb-sign">The ADF Investment Committee</p>
+      </div>
+      <div class="fb-scroll"><table data-source="ledger" data-row-key="id"><thead><tr><th data-field="league" class="fb-opt">League</th><th data-field="pick">Dantzler took</th><th data-field="fade">ADF took</th><th data-field="final_score" class="fb-opt">Final</th><th data-field="fund_result">ADF</th></tr></thead><tbody data-draw="week" data-week="2026-09-20"></tbody></table></div>
+      </article>
+    </section>
+  </section>
+
+  <section class="fb-page" id="live" role="tabpanel" aria-labelledby="tab-live" hidden>
+    <div class="fb-lv">
+      <div class="fb-lv-bar" id="live-summary">
+        <div class="fb-lv-top">
+          <div class="fb-seg" role="group" aria-label="Perspective">
+            <button type="button" data-side="adf" aria-pressed="true">ADF</button>
+            <button type="button" data-side="jd" aria-pressed="false">JD</button>
+          </div>
+          <div class="fb-fresh">
+            <span>Updated <span data-draw="fresh" data-source="live_summary" data-field="updated_at" data-where="side=adf">—</span></span>
+            <button type="button" class="fb-refresh">Refresh</button>
+          </div>
+        </div>
+        <div class="fb-sum" data-side-block="adf">
+          <div><span class="fb-label">Settled</span><span class="fb-big"><span data-draw="val" data-source="live_summary" data-field="wins" data-where="side=adf">—</span>-<span data-draw="val" data-source="live_summary" data-field="losses" data-where="side=adf">—</span></span></div>
+          <div><span class="fb-label">Units</span><span class="fb-big"><span data-draw="val" data-source="live_summary" data-field="units" data-where="side=adf" data-fmt="signed">—</span></span></div>
+          <div><span class="fb-label">Live ahead</span><span class="fb-big"><span data-draw="val" data-source="live_summary" data-field="ahead" data-where="side=adf">—</span>/<span data-draw="val" data-source="live_summary" data-field="live" data-where="side=adf">—</span></span></div>
+          <div><span class="fb-label">To play</span><span class="fb-big"><span data-draw="val" data-source="live_summary" data-field="to_play" data-where="side=adf">—</span></span></div>
+        </div>
+        <div class="fb-sum" data-side-block="jd" hidden>
+          <div><span class="fb-label">Settled</span><span class="fb-big"><span data-draw="val" data-source="live_summary" data-field="wins" data-where="side=jd">—</span>-<span data-draw="val" data-source="live_summary" data-field="losses" data-where="side=jd">—</span></span></div>
+          <div><span class="fb-label">Units</span><span class="fb-big"><span data-draw="val" data-source="live_summary" data-field="units" data-where="side=jd" data-fmt="signed">—</span></span></div>
+          <div><span class="fb-label">Live ahead</span><span class="fb-big"><span data-draw="val" data-source="live_summary" data-field="ahead" data-where="side=jd">—</span>/<span data-draw="val" data-source="live_summary" data-field="live" data-where="side=jd">—</span></span></div>
+          <div><span class="fb-label">To play</span><span class="fb-big"><span data-draw="val" data-source="live_summary" data-field="to_play" data-where="side=jd">—</span></span></div>
+        </div>
+      </div>
+
+      <p class="fb-live-err fb-note" hidden>Couldn't reach ESPN just now. Tap Refresh to try again.</p>
+
+      <p class="fb-live-empty fb-note" hidden>Dantzler hasn't posted this weekend's card yet. The Fund is in cash and resting comfortably.</p>
+
+      <section class="fb-lg" id="live-in" data-group="in" hidden>
+        <h3>Live now</h3>
+        <div class="fb-cards" data-draw="cards" data-source="live" data-group="in"></div>
+      </section>
+      <section class="fb-lg" id="live-pre" data-group="pre" hidden>
+        <h3>Up next</h3>
+        <div class="fb-cards" data-draw="cards" data-source="live" data-group="pre"></div>
+      </section>
+      <section class="fb-lg" id="live-post" data-group="post" hidden>
+        <h3>Final</h3>
+        <div class="fb-cards" data-draw="cards" data-source="live" data-group="post"></div>
+      </section>
+
+      <p class="fb-note">Chance to cover is the Committee's estimate from ESPN's live win probability, the score, the clock and the line. Light green means the side shown is on track to cover and light red means it isn't. Solid colors are final. Scores come straight from ESPN each time the page loads, and every 2 minutes while games are on.</p>
+    </div>
+  </section>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="runtime.js"></script>
+<script>
+dash.calc('ledger', {
+  inputs: ['bets'],
+  title: 'Every bet and its fade',
+  description: 'Each of Dantzler\'s bets beside the opposite side the Fund takes, with both results.',
+  fn: (bets) => {
+    const flip = (n) => (n.startsWith('-') ? '+' + n.slice(1) : '-' + n.replace('+', ''));
+    return bets.map((b) => {
+      let fade;
+      if (b.bet_type === 'Spread') { const line = b.pick.split(' ').pop(); fade = `${b.opponent} ${flip(line)}`; }
+      else fade = b.pick.includes(' Under ') ? b.pick.replace(' Under ', ' Over ') : b.pick.replace(' Over ', ' Under ');
+      return { id: b.id, weekend: b.weekend, game_date: b.game_date, league: b.league, pick: b.pick, fade, final_score: b.final_score, john_result: b.result, fund_result: b.result === 'W' ? 'L' : 'W' };
+    });
+  },
+});
+
+dash.calc('summary', {
+  inputs: ['bets'],
+  title: 'Season totals',
+  description: 'The Fund\'s record and units (the opposite of every Dantzler bet), and Dantzler\'s record.',
+  fn: (bets) => {
+    const jw = bets.filter((b) => b.result === 'W').length, jl = bets.length - jw;
+    return [{ fund_wins: jl, fund_losses: jw, fund_pct: Math.round(1000 * jl / bets.length) / 10, fund_units: -bets.reduce((s, b) => s + Number(b.units), 0), john_wins: jw, john_losses: jl, through: bets.map((b) => b.game_date).sort().pop() }];
+  },
+});
+
+dash.calc('by_weekend', {
+  inputs: ['bets'],
+  title: 'Fund results by weekend',
+  description: 'Each weekend\'s Fund record and units, with running season totals for the Fund and for Dantzler.',
+  fn: (bets) => {
+    let cw = 0, cl = 0;
+    return [...new Set(bets.map((b) => b.weekend))].sort().map((weekend) => {
+      const g = bets.filter((b) => b.weekend === weekend);
+      const jw = g.filter((b) => b.result === 'W').length, jl = g.length - jw;
+      cw += jl; cl += jw;
+      return { weekend, nfl_week: Number(g[0].nfl_week), fund_wins: jl, fund_losses: jw, fund_units: jl - jw, cum_fund_wins: cw, cum_fund_losses: cl, cum_fund_units: cw - cl, cum_john_wins: cl, cum_john_losses: cw };
+    });
+  },
+});
+
+const signed = (v) => (v > 0 ? '+' : '') + v;
+const shortDate = (s) => d3.utcFormat('%b %-d')(new Date(s));
+
+dash.draw('val', (el) => {
+  const d = dash.data(el.dataset.source);
+  if (d.status !== 'ok') { el.textContent = '—'; return; }
+  el.classList.remove('dash-skeleton');
+  let rows = d.data;
+  if (el.dataset.where) {
+    const [k, v] = el.dataset.where.split('=');
+    rows = rows.filter((r) => String(r[k]) === decodeURIComponent(v));
+  }
+  const v = rows[0] ? rows[0][el.dataset.field] : null;
+  if (v == null) { el.textContent = '—'; return; }
+  const f = el.dataset.fmt;
+  el.textContent = f === 'signed' ? signed(v) : f === 'pct' ? v.toFixed(1) + '%' : f === 'date' ? shortDate(v) : String(v);
+  el.classList.toggle('pos', f === 'signed' && v > 0);
+  el.classList.toggle('neg', f === 'signed' && v < 0);
+});
+
+dash.draw('weekly', (el) => {
+  const d = dash.data('by_weekend');
+  el.replaceChildren();
+  if (d.status !== 'ok') { if (d.status !== 'loading') { el.classList.remove('dash-skeleton'); el.textContent = '—'; } return; }
+  el.classList.remove('dash-skeleton');
+  const rows = d.data, W = Math.max(el.clientWidth || 600, 280), H = 240, mt = 14, mb = 30;
+  const lo = Math.min(0, d3.min(rows, (r) => Math.min(r.fund_units, r.cum_fund_units))), hi = Math.max(0, d3.max(rows, (r) => Math.max(r.fund_units, r.cum_fund_units)));
+  const y = d3.scaleLinear([lo, hi], [H - mb, mt]).nice();
+  const ticks = y.ticks(5);
+  const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+  const probe = svg.append('text').style('font-size', 'var(--cds-font-size-caption)');
+  let tw = 0;
+  ticks.forEach((t) => { probe.text(signed(t)); tw = Math.max(tw, probe.node().getComputedTextLength()); });
+  const last = rows[rows.length - 1];
+  probe.text(signed(last.cum_fund_units) + 'u');
+  const ew = probe.node().getComputedTextLength();
+  probe.remove();
+  const ml = tw + 10, mr = ew + 14;
+  const x = d3.scaleBand(rows.map((r) => r.weekend), [ml, W - mr]).padding(0.35);
+  const cx = (r) => x(r.weekend) + x.bandwidth() / 2;
+
+  svg.append('g').selectAll('line').data(ticks).join('line')
+    .attr('x1', ml).attr('x2', W - mr).attr('y1', (t) => y(t)).attr('y2', (t) => y(t))
+    .style('stroke', (t) => t === 0 ? 'var(--cds-chart-axis)' : 'var(--cds-chart-grid)').attr('stroke-width', 1);
+  svg.append('g').selectAll('text').data(ticks).join('text')
+    .attr('x', ml - 8).attr('y', (t) => y(t)).attr('dy', '0.32em').attr('text-anchor', 'end')
+    .style('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text(signed);
+  svg.append('g').selectAll('text').data(rows).join('text')
+    .attr('x', cx).attr('y', H - 8).attr('text-anchor', 'middle')
+    .style('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text((r) => shortDate(r.weekend));
+
+  const bw = Math.min(32, x.bandwidth());
+  svg.append('g').selectAll('rect').data(rows).join('rect')
+    .attr('x', (r) => cx(r) - bw / 2).attr('width', bw)
+    .attr('y', (r) => y(Math.max(0, r.fund_units))).attr('height', (r) => Math.max(1, Math.abs(y(r.fund_units) - y(0))))
+    .attr('rx', 3).style('fill', (r) => r.fund_units < 0 ? 'var(--cds-chart-status-critical)' : dash.colors[0]);
+
+  const line = d3.line().x(cx).y((r) => y(r.cum_fund_units));
+  svg.append('path').datum(rows).attr('d', line).attr('fill', 'none')
+    .style('stroke', dash.colors[1]).attr('stroke-width', 2).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round');
+  svg.append('g').selectAll('circle').data(rows).join('circle')
+    .attr('cx', cx).attr('cy', (r) => y(r.cum_fund_units)).attr('r', (r) => r === last ? 4 : 2.5).style('fill', dash.colors[1]);
+  svg.append('text').attr('x', cx(last) + 8).attr('y', y(last.cum_fund_units)).attr('dy', '0.32em')
+    .style('fill', dash.colors[1]).style('font-size', 'var(--cds-font-size-caption)').style('font-weight', 600)
+    .text(signed(last.cum_fund_units) + 'u');
+
+  const tip = d3.select(el).append('div').attr('class', 'fb-tip').attr('hidden', '');
+  const step = x.step();
+  svg.append('g').selectAll('rect').data(rows).join('rect')
+    .attr('x', (r) => cx(r) - step / 2).attr('width', step).attr('y', mt).attr('height', H - mt - mb)
+    .style('fill', 'transparent')
+    .on('pointerenter pointermove', (ev, r) => {
+      tip.attr('hidden', null).html('');
+      tip.append('div').attr('class', 'k').text(`Weekend of ${shortDate(r.weekend)} · NFL week ${r.nfl_week}`);
+      tip.append('div').text(`Fund ${r.fund_wins}-${r.fund_losses}, ${signed(r.fund_units)} units`);
+      tip.append('div').text(`Season: ${signed(r.cum_fund_units)} units`);
+      const box = el.getBoundingClientRect(), tb = tip.node().getBoundingClientRect();
+      const px = ev.clientX - box.left, py = ev.clientY - box.top;
+      tip.style('left', Math.max(0, Math.min(box.width - tb.width, px + 12)) + 'px').style('top', Math.max(0, py - tb.height - 8) + 'px');
+    })
+    .on('pointerleave', () => tip.attr('hidden', ''));
+});
+
+const pill = (t) => { const s = document.createElement('span'); s.className = 'fb-pill ' + (t === 'W' ? 'w' : 'l'); s.textContent = t; return s; };
+
+dash.draw('week', (tb) => {
+  tb.replaceChildren();
+  const d = dash.data('ledger');
+  if (d.status !== 'ok') return;
+  d.data.filter((r) => r.weekend === tb.dataset.week).forEach((r) => {
+    const tr = document.createElement('tr');
+    tr.dataset.key = r.id;
+    [[r.league, 'fb-opt'], [r.pick], [r.fade], [r.final_score, 'fb-opt'], [r.fund_result, 'pill']].forEach(([t, c]) => {
+      const td = document.createElement('td');
+      if (c === 'pill') td.append(pill(t)); else { td.textContent = t; if (c) td.className = c; }
+      tr.append(td);
+    });
+    tb.append(tr);
+  });
+});
+
+dash.loader('live', {
+  description: 'The live feed file as one row per pick. Google Drive returns the file base64-encoded.',
+  fn: ({ answer }) => {
+    const a = typeof answer === 'string' ? JSON.parse(answer) : answer;
+    if (!a || typeof a.content !== 'string') throw new Error('Google Drive returned no file content.');
+    const feed = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(a.content), (c) => c.charCodeAt(0))));
+    const columns = ['id', 'league', 'kickoff', 'away', 'home', 'away_score', 'home_score', 'state', 'clock', 'john_pick', 'adf_pick', 'john_cover_pct', 'john_result', 'updated_at'];
+    return { data: feed.rows || [], columns, meta: [{ label: 'Feed updated', value: String(feed.updated_at || '') }] };
+  },
+});
+
+dash.calc('live_summary', {
+  inputs: ['live'],
+  title: 'This weekend so far',
+  description: 'Settled record and units, live bets on track to cover, and bets still to play, from Dantzler\'s side and the Fund\'s.',
+  fn: (live) => ['jd', 'adf'].map((side) => {
+    const res = (r) => (side === 'jd' ? r.john_result : ({ W: 'L', L: 'W', P: 'P' })[r.john_result] || '');
+    const pct = (r) => (r.john_cover_pct == null ? null : side === 'jd' ? r.john_cover_pct : 100 - r.john_cover_pct);
+    const done = live.filter((r) => r.state === 'post'), inPlay = live.filter((r) => r.state === 'in');
+    const wins = done.filter((r) => res(r) === 'W').length, losses = done.filter((r) => res(r) === 'L').length;
+    return { side, wins, losses, units: wins - losses, live: inPlay.length, ahead: inPlay.filter((r) => pct(r) > 50).length, to_play: live.filter((r) => r.state !== 'post' && r.state !== 'in').length, updated_at: live.length ? live[0].updated_at : null };
+  }),
+});
+
+const sideNow = () => (dash.params().side === 'jd' ? 'jd' : 'adf');
+const kickFmt = d3.timeFormat('%a %-I:%M %p');
+const flipResult = { W: 'L', L: 'W', P: 'P' };
+
+dash.draw('fresh', (el) => {
+  const d = dash.data('live_summary');
+  const row = d.status === 'ok' ? d.data.find((r) => r.side === 'adf') : null;
+  if (!row || !row.updated_at) { el.textContent = '—'; return; }
+  const t = new Date(row.updated_at), mins = Math.max(0, Math.round((Date.now() - t) / 60000));
+  el.textContent = kickFmt(t) + (mins < 60 ? ` (${mins} min ago)` : mins < 1440 ? ` (${Math.round(mins / 60)} hr ago)` : '');
+});
+
+dash.draw('cards', (box) => {
+  box.replaceChildren();
+  const d = dash.data('live');
+  if (d.status !== 'ok') return;
+  const side = sideNow(), g = box.dataset.group;
+  const inGroup = (r) => (g === 'pre' ? r.state !== 'in' && r.state !== 'post' : r.state === g);
+  const rows = d.data.filter(inGroup).sort((a, b) => (g === 'post' ? -1 : 1) * String(a.kickoff).localeCompare(String(b.kickoff)) || String(a.id).localeCompare(String(b.id)));
+  rows.forEach((r) => {
+    const pick = side === 'jd' ? r.john_pick : r.adf_pick;
+    const result = side === 'jd' ? r.john_result : flipResult[r.john_result] || '';
+    const pct = r.john_cover_pct == null ? null : side === 'jd' ? r.john_cover_pct : 100 - r.john_cover_pct;
+    const card = document.createElement('div');
+    card.className = 'fb-g';
+    card.dataset.key = r.id;
+    if (r.state === 'post') card.classList.add(result === 'W' ? 'won' : result === 'L' ? 'lost' : 'push');
+    else if (r.state === 'in' && pct != null) {
+      card.classList.add(pct >= 50 ? 'up' : 'down');
+      card.style.setProperty('--tint', `color-mix(in srgb, var(${pct >= 50 ? '--color-ok' : '--color-bad'}) ${Math.round(10 + Math.abs(pct - 50) * 0.4)}%, var(--color-panel))`);
+    }
+    const pk = document.createElement('div');
+    pk.className = 'pk';
+    pk.textContent = pick;
+    const sc = document.createElement('div');
+    sc.className = 'sc';
+    const score = r.away_score == null ? `${r.away} @ ${r.home}` : `${r.away} ${r.away_score} @ ${r.home} ${r.home_score}`;
+    const when = r.state === 'pre' && r.kickoff ? kickFmt(new Date(r.kickoff)) : r.clock;
+    sc.textContent = `${r.league} · ${score} · ${when}`;
+    const pc = document.createElement('div');
+    pc.className = 'pc';
+    const big = document.createElement('b'), cap = document.createElement('span');
+    if (r.state === 'post') { big.textContent = result === 'W' ? 'Won' : result === 'L' ? 'Lost' : 'Push'; cap.textContent = 'final'; }
+    else if (r.state === 'in' && pct != null) { big.textContent = pct + '%'; cap.textContent = 'to cover'; }
+    else { big.textContent = '—'; cap.textContent = r.state === 'missing' ? 'no ESPN game' : 'not started'; }
+    pc.append(big, cap);
+    card.append(pk, sc, pc);
+    box.append(card);
+  });
+});
+
+dash.onData(() => {
+  const d = dash.data('live');
+  const rows = d.status === 'ok' ? d.data : [];
+  const side = sideNow();
+  document.querySelectorAll('.fb-live-empty').forEach((e) => { e.hidden = !(d.status === 'ok' && rows.length === 0); });
+  document.querySelectorAll('section.fb-lg[data-group]').forEach((s) => {
+    const g = s.dataset.group;
+    s.hidden = !rows.some((r) => (g === 'pre' ? r.state !== 'in' && r.state !== 'post' : r.state === g));
+  });
+  document.querySelectorAll('[data-side-block]').forEach((b) => { b.hidden = b.dataset.sideBlock !== side; });
+  document.querySelectorAll('.fb-seg [data-side]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.side === side)));
+});
+
+document.querySelectorAll('.fb-seg [data-side]').forEach((b) => b.addEventListener('click', () => dash.setParams({ side: b.dataset.side })));
+document.querySelectorAll('.fb-refresh').forEach((b) => b.addEventListener('click', () => dash.refresh('live')));
+
+const showTab = (id) => {
+  document.querySelectorAll('.fb-tabs [data-tab]').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === id)));
+  document.querySelectorAll('.fb-page').forEach((p) => { p.hidden = p.id !== id; });
+  dash.setLink(id);
+};
+document.querySelectorAll('.fb-tabs [data-tab]').forEach((b) => b.addEventListener('click', () => showTab(b.dataset.tab)));
+if (location.hash === '#live') showTab('live');
+
+dash.draw('fresh', (el) => {
+  const d = dash.data('live');
+  if (!d.updatedAt) { el.textContent = '—'; return; }
+  el.textContent = kickFmt(new Date(d.updatedAt));
+});
+dash.onData(() => {
+  const d = dash.data('live');
+  document.querySelectorAll('.fb-live-err').forEach((e) => { e.hidden = d.status !== 'error'; });
+});
+window.addEventListener('hashchange', () => showTab(location.hash === '#live' ? 'live' : 'history'));
+adfStart();
+</script>
+</body>
+</html>
