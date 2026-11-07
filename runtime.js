@@ -45,7 +45,7 @@
 
   const PATH = { NFL: 'nfl', CFB: 'college-football' };
   const SIGMA = { NFL: [13.5, 13.5], CFB: [15.5, 16.0] }; // std dev of full-game final margin and total
-  const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/football/';
+  const ESPN = 'https://site.web.api.espn.com/apis/site/v2/sports/football/'; // site.api.espn.com stopped sending CORS headers to browsers (11/7)
   const norm = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
   const names = (t) => new Set(['displayName', 'shortDisplayName', 'location', 'name', 'abbreviation', 'nickname'].map((k) => norm(t[k])).filter(Boolean));
   const flip = (l) => (l.startsWith('-') ? '+' + l.slice(1) : '-' + l.replace(/^\+/, ''));
