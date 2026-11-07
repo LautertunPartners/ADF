@@ -1,7 +1,112 @@
 [
- {"id": "T1", "league": "NFL", "game_date": "2026-11-02", "away": "Bears", "home": "Seahawks", "bet_type": "Spread", "side": "Seahawks", "line": "-3"},
- {"id": "T2", "league": "NFL", "game_date": "2026-11-02", "away": "Bears", "home": "Seahawks", "bet_type": "Spread", "side": "Bears", "line": "+6.5"},
- {"id": "T3", "league": "NFL", "game_date": "2026-11-02", "away": "Bears", "home": "Seahawks", "bet_type": "Over", "side": "", "line": "44.5"},
- {"id": "T4", "league": "NFL", "game_date": "2026-11-02", "away": "Bears", "home": "Seahawks", "bet_type": "Under", "side": "", "line": "40.5"},
- {"id": "T5", "league": "NFL", "game_date": "2026-11-02", "away": "Bears", "home": "Seahawks", "bet_type": "Spread", "side": "Bears", "line": "-1.5"}
+ {
+  "id": "B50",
+  "league": "CFB",
+  "game_date": "2026-11-07",
+  "away": "Clemson",
+  "home": "Syracuse",
+  "bet_type": "Spread",
+  "side": "Clemson",
+  "line": "-1.5"
+ },
+ {
+  "id": "B51",
+  "league": "CFB",
+  "game_date": "2026-11-07",
+  "away": "UCLA",
+  "home": "Minnesota",
+  "bet_type": "Spread",
+  "side": "Minnesota",
+  "line": "+4"
+ },
+ {
+  "id": "B52",
+  "league": "CFB",
+  "game_date": "2026-11-07",
+  "away": "North Carolina",
+  "home": "UConn",
+  "bet_type": "Spread",
+  "side": "UConn",
+  "line": "+7.5"
+ },
+ {
+  "id": "B53",
+  "league": "CFB",
+  "game_date": "2026-11-07",
+  "away": "Arkansas",
+  "home": "Auburn",
+  "bet_type": "Over",
+  "side": "Over",
+  "line": "54.5"
+ },
+ {
+  "id": "B54",
+  "league": "CFB",
+  "game_date": "2026-11-07",
+  "away": "Alabama",
+  "home": "LSU",
+  "bet_type": "Spread",
+  "side": "LSU",
+  "line": "-6"
+ },
+ {
+  "id": "B55",
+  "league": "CFB",
+  "game_date": "2026-11-07",
+  "away": "Boise State",
+  "home": "Colorado State",
+  "bet_type": "Spread",
+  "side": "Colorado State",
+  "line": "+16.5"
+ },
+ {
+  "id": "B56",
+  "league": "CFB",
+  "game_date": "2026-11-07",
+  "away": "Kentucky",
+  "home": "Tennessee",
+  "bet_type": "Spread",
+  "side": "Tennessee",
+  "line": "-6"
+ },
+ {
+  "id": "B57",
+  "league": "CFB",
+  "game_date": "2026-11-07",
+  "away": "Oklahoma",
+  "home": "Florida",
+  "bet_type": "Under",
+  "side": "Under",
+  "line": "44.5"
+ },
+ {
+  "id": "B58",
+  "league": "NFL",
+  "game_date": "2026-11-08",
+  "away": "Giants",
+  "home": "Eagles",
+  "bet_type": "Spread",
+  "side": "Giants",
+  "line": "-1.5"
+ },
+ {
+  "id": "B59",
+  "league": "NFL",
+  "game_date": "2026-11-08",
+  "away": "Packers",
+  "home": "Patriots",
+  "bet_type": "Under",
+  "side": "Under",
+  "line": "44.5"
+ },
+ {
+  "id": "B60",
+  "league": "NFL",
+  "game_date": "2026-11-09",
+  "away": "Bills",
+  "home": "Vikings",
+  "bet_type": "Under",
+  "side": "Under",
+  "line": "44.5"
+ }
 ]
