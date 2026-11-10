@@ -143,6 +143,18 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     <section class="fb-sec" id="letters">
       <h2>Shareholder letters</h2>
 
+      <article class="fb-week" id="wk-2026-11-08"><div class="fb-week-head"><h3>Weekend of <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-08" data-field="weekend" data-fmt="date">—</span></h3><span class="fb-chip">Fund <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-08" data-field="fund_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-08" data-field="fund_losses">—</span> · <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-08" data-field="fund_units" data-fmt="signed">—</span> units</span></div>
+      <div class="fb-letter">
+<p>Dear Limited Partners,</p>
+<p>A winning week. I'd like to say that again, slowly, for the LPs who have stopped opening these. The Fund went <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-08" data-field="fund_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-08" data-field="fund_losses">—</span></b> for <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-08" data-field="fund_units" data-fmt="signed">—</span></b> units. That is one unit. I understand it is not a lot. I am choosing to treat it as a lot.</p>
+<p>It came, as promised in the prospectus, from Dantzler. He took Colorado State +16.5 against Boise State. Colorado State came in allowing an FBS-worst 42.4 points per game, and Boise State's backup quarterback threw four touchdowns while the running back struck the Heisman pose (<span data-draw="val" data-source="ledger" data-where="id=B55" data-field="final_score">—</span>). He laid 6 with LSU against Alabama, and LSU went 0 for 4 on fourth down and lost going away (<span data-draw="val" data-source="ledger" data-where="id=B54" data-field="final_score">—</span>). He took UConn +7.5, and North Carolina scored 21 points off three turnovers (<span data-draw="val" data-source="ledger" data-where="id=B52" data-field="final_score">—</span>). He took the under 44.5 in Foxborough, and the Packers and Patriots went for 72 (<span data-draw="val" data-source="ledger" data-where="id=B59" data-field="final_score">—</span>). This is the man I built a fund around. It was nice to see him again.</p>
+<p>He did get some back, and he did it the way he always does, by needing things no reasonable person would need. He laid 1.5 with Clemson, whose only touchdown was a fumble return off a backwards pass while the Syracuse quarterback missed 11 straight throws (<span data-draw="val" data-source="ledger" data-where="id=B50" data-field="final_score">—</span>). He laid 1.5 with the Giants in Philadelphia, a place they had not won in 13 years, and when their starter got hurt, Jameis Winston came off the bench and threw the go-ahead touchdown (<span data-draw="val" data-source="ledger" data-where="id=B58" data-field="final_score">—</span>). If your bet requires Jameis Winston in relief, you are supposed to lose it. He took the under on Bills-Vikings and Carson Wentz went 8 for 25 for 81 yards (<span data-draw="val" data-source="ledger" data-where="id=B60" data-field="final_score">—</span>). And I had the over in Gainesville, where Oklahoma ran a 20-play drive that took 12 minutes and 45 seconds off the clock (<span data-draw="val" data-source="ledger" data-where="id=B57" data-field="final_score">—</span>). I watched the whole thing. I aged.</p>
+<p>The Fund stands at <b><span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-08" data-field="cum_fund_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-08" data-field="cum_fund_losses">—</span>, <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-08" data-field="cum_fund_units" data-fmt="signed">—</span></b> units on the season. Still underwater, but now underwater and rising, which I'm told is how submarines work. Please do not forward this letter to Dantzler. He will only take it as encouragement.</p>
+        <p class="fb-sign">Will McNamee, Founder and Chief Investment Officer</p>
+      </div>
+      <div class="fb-scroll"><table data-source="ledger" data-row-key="id"><thead><tr><th data-field="league" class="fb-opt">League</th><th data-field="pick">Dantzler took</th><th data-field="fade">ADF took</th><th data-field="final_score" class="fb-opt">Final</th><th data-field="fund_result">ADF</th></tr></thead><tbody data-draw="week" data-week="2026-11-08"></tbody></table></div>
+      </article>
+
       <article class="fb-week" id="wk-2026-11-01"><div class="fb-week-head"><h3>Weekend of <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-01" data-field="weekend" data-fmt="date">—</span></h3><span class="fb-chip">Fund <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-01" data-field="fund_wins">—</span>-<span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-01" data-field="fund_losses">—</span> · <span data-draw="val" data-source="by_weekend" data-where="weekend=2026-11-01" data-field="fund_units" data-fmt="signed">—</span> units</span></div>
       <div class="fb-letter">
 <p>Dear Limited Partners,</p>
@@ -273,7 +285,7 @@ dash.calc('ledger', {
       let fade;
       if (b.bet_type === 'Spread') { const line = b.pick.split(' ').pop(); fade = `${b.opponent} ${flip(line)}`; }
       else fade = b.pick.includes(' Under ') ? b.pick.replace(' Under ', ' Over ') : b.pick.replace(' Over ', ' Under ');
-      return { id: b.id, weekend: b.weekend, game_date: b.game_date, league: b.league, pick: b.pick, fade, final_score: b.final_score, john_result: b.result, fund_result: b.result === 'W' ? 'L' : 'W' };
+      return { id: b.id, weekend: b.weekend, game_date: b.game_date, league: b.league, pick: b.pick, fade, final_score: b.final_score, john_result: b.result, fund_result: b.result === 'W' ? 'L' : b.result === 'L' ? 'W' : 'P' };
     });
   },
 });
@@ -283,8 +295,8 @@ dash.calc('summary', {
   title: 'Season totals',
   description: 'The Fund\'s record and units (the opposite of every Dantzler bet), and Dantzler\'s record.',
   fn: (bets) => {
-    const jw = bets.filter((b) => b.result === 'W').length, jl = bets.length - jw;
-    return [{ fund_wins: jl, fund_losses: jw, fund_pct: Math.round(1000 * jl / bets.length) / 10, fund_units: -bets.reduce((s, b) => s + Number(b.units), 0), john_wins: jw, john_losses: jl, through: bets.map((b) => b.game_date).sort().pop() }];
+    const jw = bets.filter((b) => b.result === 'W').length, jl = bets.filter((b) => b.result === 'L').length;
+    return [{ fund_wins: jl, fund_losses: jw, fund_pct: Math.round(1000 * jl / (jw + jl)) / 10, fund_units: -bets.reduce((s, b) => s + Number(b.units), 0), john_wins: jw, john_losses: jl, through: bets.map((b) => b.game_date).sort().pop() }];
   },
 });
 
@@ -296,7 +308,7 @@ dash.calc('by_weekend', {
     let cw = 0, cl = 0;
     return [...new Set(bets.map((b) => b.weekend))].sort().map((weekend) => {
       const g = bets.filter((b) => b.weekend === weekend);
-      const jw = g.filter((b) => b.result === 'W').length, jl = g.length - jw;
+      const jw = g.filter((b) => b.result === 'W').length, jl = g.filter((b) => b.result === 'L').length;
       cw += jl; cl += jw;
       return { weekend, nfl_week: Number(g[0].nfl_week), fund_wins: jl, fund_losses: jw, fund_units: jl - jw, cum_fund_wins: cw, cum_fund_losses: cl, cum_fund_units: cw - cl, cum_john_wins: cl, cum_john_losses: cw };
     });
