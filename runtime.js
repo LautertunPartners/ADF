@@ -68,13 +68,38 @@
         if (an.has(norm(p.home)) && hn.has(norm(p.away))) { e = ev; comps = cs; [p.away, p.home] = [p.home, p.away]; break; }
       }
       let john, adf;
-      if (p.bet_type === 'Spread') { const opp = norm(p.side) === norm(p.away) ? p.home : p.away; john = `${p.side} ${line}`; adf = `${opp} ${flip(line)}`; }
+      if (p.bet_type === 'Prop') { john = `${p.player} ${p.side} ${line} ${p.stat}`; adf = `${p.player} ${p.side === 'Over' ? 'Under' : 'Over'} ${line} ${p.stat}`; }
+      else if (p.bet_type === 'Spread') { const opp = norm(p.side) === norm(p.away) ? p.home : p.away; john = `${p.side} ${line}`; adf = `${opp} ${flip(line)}`; }
       else { john = `${p.away}/${p.home} ${p.bet_type} ${line}`; adf = `${p.away}/${p.home} ${p.bet_type === 'Over' ? 'Under' : 'Over'} ${line}`; }
       const row = { id: p.id, league: p.league, kickoff: '', away: p.away, home: p.home, away_score: null, home_score: null, state: 'missing', clock: 'Game not found on ESPN', john_pick: john, adf_pick: adf, john_cover_pct: null, john_result: '' };
       if (!e) return row;
       const st = e.status.type, asc = Number(comps.away.score || 0), hsc = Number(comps.home.score || 0);
       Object.assign(row, { kickoff: e.date, state: st.state, clock: st.shortDetail || '' });
       if (st.state !== 'pre') Object.assign(row, { away_score: asc, home_score: hsc });
+      if (p.bet_type === 'Prop') {
+        if (st.state === 'pre') return row;
+        let yds = 0;
+        try {
+          wpCache[e.id] = wpCache[e.id] || getJSON(`${ESPN}${PATH[p.league]}/summary?event=${e.id}`);
+          for (const t of ((await wpCache[e.id]).boxscore || {}).players || []) for (const c of t.statistics || []) {
+            if (c.name !== 'rushing') continue;
+            const a = (c.athletes || []).find((x) => String(x.athlete.id) === String(p.player_id));
+            if (a) yds = Number(a.stats[c.keys.indexOf('rushingYards')]) || 0;
+          }
+        } catch (err) { return row; }
+        row.clock = `${row.clock} · ${p.player.split(' ').pop()} ${yds} yds`;
+        const dir = p.side === 'Over' ? 1 : -1;
+        if (st.state === 'post') {
+          const v = (yds - ln) * dir;
+          row.john_result = v > 0 ? 'W' : v < 0 ? 'L' : 'P';
+          row.john_cover_pct = v > 0 ? 100 : v < 0 ? 0 : 50;
+        } else {
+          const period = e.status.period || 0, frac = (period <= 4 ? Math.max(0, (4 - period) * 900 + (e.status.clock || 0)) : 0) / 3600;
+          const po = cdf((yds - ln * (1 - frac)) / Math.max(30 * Math.sqrt(frac), 3)); // ~30 yd sd for a full game
+          row.john_cover_pct = Math.round((dir === 1 ? po : 1 - po) * 100);
+        }
+        return row;
+      }
       const [sdM, sdT] = SIGMA[p.league];
       const sideHome = norm(p.side) === norm(p.home), m = sideHome ? hsc - asc : asc - hsc;
       if (st.state === 'post') {
