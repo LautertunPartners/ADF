@@ -1,1 +1,92 @@
-[]
+[
+ {
+  "id": "B79",
+  "league": "CFB",
+  "game_date": "2026-11-20",
+  "away": "Clemson",
+  "home": "Duke",
+  "bet_type": "Spread",
+  "side": "Clemson",
+  "line": "+12.5"
+ },
+ {
+  "id": "B80",
+  "league": "CFB",
+  "game_date": "2026-11-21",
+  "away": "Ohio State",
+  "home": "Nebraska",
+  "bet_type": "Spread",
+  "side": "Ohio State",
+  "line": "-3.5"
+ },
+ {
+  "id": "B81",
+  "league": "CFB",
+  "game_date": "2026-11-21",
+  "away": "Syracuse",
+  "home": "Boston College",
+  "bet_type": "Spread",
+  "side": "Boston College",
+  "line": "+3"
+ },
+ {
+  "id": "B82",
+  "league": "CFB",
+  "game_date": "2026-11-21",
+  "away": "Wisconsin",
+  "home": "Purdue",
+  "bet_type": "Spread",
+  "side": "Purdue",
+  "line": "+4.5"
+ },
+ {
+  "id": "B83",
+  "league": "CFB",
+  "game_date": "2026-11-21",
+  "away": "Memphis",
+  "home": "Navy",
+  "bet_type": "Over",
+  "side": "Over",
+  "line": "68.5"
+ },
+ {
+  "id": "B84",
+  "league": "CFB",
+  "game_date": "2026-11-21",
+  "away": "Houston",
+  "home": "West Virginia",
+  "bet_type": "Spread",
+  "side": "West Virginia",
+  "line": "+7"
+ },
+ {
+  "id": "B85",
+  "league": "CFB",
+  "game_date": "2026-11-21",
+  "away": "Charlotte",
+  "home": "Tulsa",
+  "bet_type": "Under",
+  "side": "Under",
+  "line": "51.5"
+ },
+ {
+  "id": "B86",
+  "league": "CFB",
+  "game_date": "2026-11-21",
+  "away": "UCLA",
+  "home": "Michigan",
+  "bet_type": "Under",
+  "side": "Under",
+  "line": "36.5"
+ },
+ {
+  "id": "B87",
+  "league": "CFB",
+  "game_date": "2026-11-21",
+  "away": "Northern Illinois",
+  "home": "North Dakota State",
+  "bet_type": "Under",
+  "side": "Under",
+  "line": "45.5"
+ }
+]
