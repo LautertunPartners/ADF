@@ -138,5 +138,35 @@
   "bet_type": "Under",
   "side": "Under",
   "line": "44.5"
+ },
+ {
+  "id": "B93",
+  "league": "NFL",
+  "game_date": "2026-11-22",
+  "away": "Jaguars",
+  "home": "Giants",
+  "bet_type": "Spread",
+  "side": "Giants",
+  "line": "+6.5"
+ },
+ {
+  "id": "B94",
+  "league": "NFL",
+  "game_date": "2026-11-22",
+  "away": "Raiders",
+  "home": "Broncos",
+  "bet_type": "Spread",
+  "side": "Broncos",
+  "line": "-11.5"
+ },
+ {
+  "id": "B95",
+  "league": "NFL",
+  "game_date": "2026-11-23",
+  "away": "Bengals",
+  "home": "Commanders",
+  "bet_type": "Spread",
+  "side": "Bengals",
+  "line": "-5.5"
  }
 ]
