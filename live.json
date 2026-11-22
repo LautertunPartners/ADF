@@ -128,5 +128,15 @@
   "bet_type": "Over",
   "side": "Over",
   "line": "54.5"
+ },
+ {
+  "id": "B92",
+  "league": "NFL",
+  "game_date": "2026-11-22",
+  "away": "Dolphins",
+  "home": "Bills",
+  "bet_type": "Under",
+  "side": "Under",
+  "line": "44.5"
  }
 ]
