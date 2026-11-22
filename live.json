@@ -88,5 +88,45 @@
   "bet_type": "Under",
   "side": "Under",
   "line": "45.5"
+ },
+ {
+  "id": "B88",
+  "league": "NFL",
+  "game_date": "2026-11-22",
+  "away": "Buccaneers",
+  "home": "Lions",
+  "bet_type": "Spread",
+  "side": "Buccaneers",
+  "line": "+3.5"
+ },
+ {
+  "id": "B89",
+  "league": "NFL",
+  "game_date": "2026-11-22",
+  "away": "Steelers",
+  "home": "Eagles",
+  "bet_type": "Under",
+  "side": "Under",
+  "line": "38"
+ },
+ {
+  "id": "B90",
+  "league": "NFL",
+  "game_date": "2026-11-22",
+  "away": "Cardinals",
+  "home": "Chiefs",
+  "bet_type": "Under",
+  "side": "Under",
+  "line": "40.5"
+ },
+ {
+  "id": "B91",
+  "league": "NFL",
+  "game_date": "2026-11-22",
+  "away": "Titans",
+  "home": "Cowboys",
+  "bet_type": "Over",
+  "side": "Over",
+  "line": "54.5"
  }
 ]
